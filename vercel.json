@@ -1,0 +1,9 @@
+{
+    "alias": "loiclegoff.com",
+    "build": {
+      "env": {
+        "GITHUB_TOKEN": "@loiclegoff-com-github"
+      }
+    },
+    "version": 1
+  }
