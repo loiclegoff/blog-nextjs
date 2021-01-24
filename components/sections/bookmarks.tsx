@@ -27,7 +27,7 @@ const BookmarkIcon: React.FC<{
 const BookmarkRow: React.FC<Bookmark> = ({
   Name,
   CreationTime,
-  Tags,
+  // Tags,
   URL,
   Type,
   Description,
