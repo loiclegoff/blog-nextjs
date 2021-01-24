@@ -12,7 +12,7 @@ export const config = {
     githubUsername: "loiclegoff",
     twitterUserName: "llegoff",
     // notionBlogTableId: "3a1f675cc61e47a3b77c858dc66b752a",
-    // notionAchievementTableId: "3e46de9f7eb847e596170b59c16c6fec",
+    notionBookmarksTableId: "fce42c9b1baf477a8f1979877754e9c8",
     // notionProjectTableId: "5e74829f397e430ebf7c18dfacbb7ac0",
     githubToken,
 };

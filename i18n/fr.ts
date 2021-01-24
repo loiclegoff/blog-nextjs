@@ -9,6 +9,22 @@ export const texts = {
       starredRepos: "Repos que j'aime"
     },
     nav: {
-        links: 'Liens'
+        links: 'Liens',
+        credits: 'Crédits'
+    },
+    footer: {
+      inspiredBy: "inspiré par"
+    },
+    bookmarks: {
+      title: "Liens",
+      description: "Ceux que j'ai retenus"
+    },
+    credits: {
+      icons: {
+        title: "Icons",
+        description: "Récupérés sur",
+        by: "par"
+      }
     }
+
 }

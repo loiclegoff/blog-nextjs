@@ -1,4 +1,5 @@
 import { config } from "../../config";
+import { texts } from "../../i18n";
 
 export const Footer: React.FC = () => {
     return (
@@ -6,6 +7,9 @@ export const Footer: React.FC = () => {
         © {new Date().getFullYear()} {config.name} ·{" "}
         <a className="text-blue-500" href="https://github.com/loiclegoff/blog-nextjs">
           Source
+        </a>
+        {" "}{texts.footer.inspiredBy} <a className="text-blue-500" href="https://timo.sh/">
+          timo.sh
         </a>
       </div>
     );

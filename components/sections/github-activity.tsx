@@ -1,45 +1,41 @@
-import React from "react";
+import React from 'react'
 
-import { Repo } from "../../core/github";
-import { config } from "../../config";
-import { texts } from "../../i18n";
+import { Repo } from '../../core/github'
+import { config } from '../../config'
+import { texts } from '../../i18n'
+import { LinkWithDescription } from '../base/link-with-description'
 
 const RepoList: React.FC<{
-  title: string;
-  url: string;
-  repos: Repo[];
+  title: string
+  url: string
+  repos: Repo[]
 }> = ({ repos, title, url }) => (
   <div>
-    <h2 className="text-2xl text-gray-600">{title}</h2>
+    <h2 className='text-2xl text-gray-600'>{title}</h2>
     <ul>
       {repos.map(({ id, name, url, description, owner }) => (
-        <li key={id}>
-          <a
-            href={url}
-            className="block my-4 p-4 -mx-4 hover:bg-gray-100 rounded-md"
-          >
-            <div>
-              <span className="text-blue-400">{owner.login}/</span>
-              <span className="text-blue-600">{name}</span>
-            </div>
-            <div>{description}</div>
-          </a>
+        <li key={id} className='block my-4 p-4 -mx-4'>
+          <LinkWithDescription
+            title={`${owner.login}/${name}`}
+            url={url}
+            description={description}
+          />
         </li>
       ))}
     </ul>
-    <a href={url} className="text-blue-600 text-sm">
-      View more on <span className="font-semibold">GitHub</span> →
+    <a href={url} className='text-blue-600 text-sm'>
+      View more on <span className='font-semibold'>GitHub</span> →
     </a>
   </div>
-);
+)
 
 export const GitHubActivity: React.FC<{
-  starredRepos: Repo[];
-  contributedRepos: Repo[];
+  starredRepos: Repo[]
+  contributedRepos: Repo[]
 }> = ({ starredRepos, contributedRepos }) => (
-  <div className="container">
-    <h1 className="text-4xl font-bold">{texts.githubActivity.title}</h1>
-    <div className="grid grid-cols-1 md:grid-cols-2 gap-24 md:gap-32">
+  <div className='container'>
+    <h1 className='text-4xl font-bold'>{texts.githubActivity.title}</h1>
+    <div className='grid grid-cols-1 md:grid-cols-2 gap-24 md:gap-32'>
       <RepoList
         title={texts.githubActivity.contributedRepos}
         url={`https://github.com/${config.githubUsername}`}
@@ -52,4 +48,4 @@ export const GitHubActivity: React.FC<{
       />
     </div>
   </div>
-);
+)

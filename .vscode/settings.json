@@ -2,5 +2,7 @@
     "css.customData": [
         ".vscode/css_custom_data.json"
     ],
-    "css.validate": false
+    "css.validate": false,
+    "editor.formatOnPaste": true,
+    "editor.formatOnSave": true
 }
