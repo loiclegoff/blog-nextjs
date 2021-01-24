@@ -13,7 +13,8 @@ export const texts = {
         credits: 'Crédits'
     },
     footer: {
-      inspiredBy: "inspiré par"
+      inspiredBy: "inspiré par",
+      forIconsSee: "Pour les icons:"
     },
     bookmarks: {
       title: "Liens",
