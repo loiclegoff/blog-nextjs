@@ -1,12 +1,20 @@
-import Logo from '../../assets/svgs/puzzle.svg'
+// import Logo from '../../assets/svgs/puzzle.svg'
 import Link from 'next/link'
 import { texts } from '../../i18n'
+import Image from 'next/image'
 
 export const Nav: React.FC = () => (
   <nav className='flex justify-between items-center my-4 container'>
     <Link href='/'>
       <a>
-        <Logo className='w-8' />
+        {/* <Logo className='w-8' /> */}
+        <Image
+          className='h-6 w-6 rounded-full ring-2 ring-white'
+          src='/avatar.jpg'
+          alt='Picture of the author'
+          width={60}
+          height={60}
+        />
       </a>
     </Link>
     <ul className='flex'>

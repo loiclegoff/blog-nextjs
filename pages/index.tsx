@@ -41,7 +41,13 @@ export const getStaticProps: GetStaticProps<AppProps> = async () => {
     bookmarksData.map(async (a) => {
       const blockMap = await getPageBlocks(a.id)
       const URL = getBookmarkUrl(blockMap, a.id)
-      const Description = await getDescriptionFromUrl(URL)
+
+      let Description = ''
+
+      try {
+        Description = await getDescriptionFromUrl(URL)
+      } catch (error) {}
+
       return {
         ...a,
         URL,

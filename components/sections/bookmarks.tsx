@@ -56,6 +56,8 @@ export const Bookmarks: React.FC<{ bookmarks: Bookmark[] }> = ({
 }) => {
   const [showMore, setShowMore] = useState(false)
 
+  const bookmarksToShow = showMore ? bookmarks : bookmarks.slice(0, 5)
+
   return (
     <div className='container my-16'>
       <div className='m-auto max-w-3xl'>
@@ -64,7 +66,7 @@ export const Bookmarks: React.FC<{ bookmarks: Bookmark[] }> = ({
           {texts.bookmarks.description}
         </div>
         <div className='my-4'>
-          {bookmarks.map((a, i) => (
+          {bookmarksToShow.map((a, i) => (
             <BookmarkRow key={i} {...a} />
           ))}
         </div>
