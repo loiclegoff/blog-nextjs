@@ -1,9 +1,7 @@
 {
-    "alias": "loiclegoff.com",
     "build": {
       "env": {
-        "GITHUB_TOKEN": "@loiclegoff-com-github"
+        "GITHUB_TOKEN": "@loiclegoff-com-github-token"
       }
-    },
-    "version": 1
-  }
+    }
+ }
