@@ -18,7 +18,9 @@ export const texts = {
     },
     bookmarks: {
       title: "Liens",
-      description: "Ceux que j'ai retenus"
+      description: "Ceux que j'ai retenus",
+      showMore: "Voir plus",
+      showLess: "Voir moins"
     },
     credits: {
       icons: {

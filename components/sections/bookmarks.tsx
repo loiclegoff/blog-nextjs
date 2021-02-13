@@ -74,7 +74,9 @@ export const Bookmarks: React.FC<{ bookmarks: Bookmark[] }> = ({
           <button
             className='px-2 py-1 text-gray-800 border border-gray-300 rounded shadow-xs'
             onClick={() => setShowMore(!showMore)}>
-            {showMore ? 'Show less ↑' : 'Show more ↓'}
+            {showMore
+              ? `${texts.bookmarks.showLess} ↑`
+              : `${texts.bookmarks.showMore} ↓`}
           </button>
         </div>
       </div>
