@@ -8,6 +8,7 @@
     "start": "next start"
   },
   "dependencies": {
+    "@splitbee/web": "^0.2.4",
     "autoprefixer": "^10.1.0",
     "dayjs": "^1.10.3",
     "domino": "^2.1.6",
