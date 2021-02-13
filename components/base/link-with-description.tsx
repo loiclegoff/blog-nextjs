@@ -5,7 +5,7 @@ export const LinkWithDescription: React.FC<{
   url: string
   description: string
 }> = ({ title, url, description }) => (
-  <h4 className='flex-1'>
+  <h4 className='w-full flex-1'>
     <a
       href={url}
       className='block mt-1 text-lg leading-tight font-medium text-black hover:underline'>

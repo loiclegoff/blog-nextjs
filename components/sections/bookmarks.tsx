@@ -12,6 +12,8 @@ const BookmarkIcon: React.FC<{
   type: BookmarkType
   className?: string
 }> = ({ type, ...props }) => {
+  return <Git {...props} />
+
   switch (type) {
     case 'repository':
       return <Git {...props} />
@@ -35,17 +37,34 @@ const BookmarkRow: React.FC<Bookmark> = ({
   const relevantDate = dayjs(CreationTime).locale('fr')
   return (
     <div
-      className='flex items-center my-8 animate-enter achievement-notion'
+      className='flex flex-col items-center my-8 animate-enter'
       style={{
         animation: 'enter 300ms ease-out',
       }}>
-      <BookmarkIcon className='w-10 md:w-18 mr-4' type={Type} />
       <LinkWithDescription title={Name} url={URL} description={Description} />
-      <div className='py-6 flex items-center group relative h-6 w-20 md:w-24 cursor-default border-l pl-2 ml-2'>
-        <span className='text-gray-600'>{relevantDate.format('MMM')}</span>
-        <span className='transform translate-x-2'>
-          {relevantDate.format('YYYY')}
-        </span>
+      <div className='flex w-full h-4 mt-1'>
+        <div className='flex items-center'>
+          <svg
+            className='h-4 w-4 text-gray-400 mr-1'
+            xmlns='http://www.w3.org/2000/svg'
+            fill='none'
+            viewBox='0 0 24 24'
+            stroke='currentColor'>
+            <path
+              strokeLinecap='round'
+              strokeLinejoin='round'
+              strokeWidth={2}
+              d='M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z'
+            />
+          </svg>
+          <span className='text-sm text-gray-400'>
+            {relevantDate.format('DD MMM YYYY')}
+          </span>
+        </div>
+        {/* <div className='flex items-center'>
+          <BookmarkIcon className='h-4 w-4 text-gray-400 mr-1' type={Type} />
+          <span className='text-sm text-gray-400'>{'test'}</span>
+        </div> */}
       </div>
     </div>
   )
