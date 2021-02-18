@@ -13,8 +13,8 @@ export const Footer: React.FC = () => {
       {texts.footer.inspiredBy}{' '}
       <a className='text-blue-500' href='https://timo.sh/'>
         timo.sh
-      </a>{' '}
-      ·
+      </a>
+      {' '}·{' '}
       <a className='text-blue-500' href='/credits'>
         {texts.nav.credits}
       </a>
