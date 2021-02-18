@@ -14,7 +14,7 @@ export const Footer: React.FC = () => {
       <a className='text-blue-500' href='https://timo.sh/'>
         timo.sh
       </a>{' '}
-      · {texts.footer.forIconsSee}{' '}
+      ·
       <a className='text-blue-500' href='/credits'>
         {texts.nav.credits}
       </a>
