@@ -27,10 +27,9 @@ export const texts = {
       }
     },
     credits: {
-      icons: {
-        title: "Icons",
-        description: "Récupérés sur",
-        by: "par"
+      inspirations: {
+        title: "Inspirations",
+        description: "Ce site est inspiré du code issue du repo",
       }
     }
 
