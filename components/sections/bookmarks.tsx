@@ -4,7 +4,6 @@ import { Bookmark, BookmarkType } from '../../types/bookmark'
 
 import Git from '../../assets/svgs/git.svg'
 import Site from '../../assets/svgs/site.svg'
-import Blog from '../../assets/svgs/blog.svg'
 import dayjs from 'dayjs'
 import { LinkWithDescription } from '../base/link-with-description'
 
@@ -12,13 +11,9 @@ const BookmarkIcon: React.FC<{
   type: BookmarkType
   className?: string
 }> = ({ type, ...props }) => {
-  return <Git {...props} />
-
   switch (type) {
     case 'repository':
       return <Git {...props} />
-    case 'blog':
-      return <Blog {...props} />
     case 'site':
       return <Site {...props} />
     default:
@@ -26,15 +21,26 @@ const BookmarkIcon: React.FC<{
   }
 }
 
+const capitalize = (s: unknown) => {
+  if (typeof s !== 'string') return ''
+  return s.charAt(0).toUpperCase() + s.slice(1)
+}
+
+const getTypeFromURL = (url: string) =>
+  url.indexOf('github.com') > -1 || url.indexOf('gitlab.com') > -1
+    ? 'repository'
+    : 'site'
+
 const BookmarkRow: React.FC<Bookmark> = ({
   Name,
   CreationTime,
   // Tags,
   URL,
-  Type,
+  // Type,
   Description,
 }) => {
   const relevantDate = dayjs(CreationTime).locale('fr')
+  const type = getTypeFromURL(URL)
   return (
     <div
       className='flex flex-col items-center my-8 animate-enter'
@@ -42,10 +48,10 @@ const BookmarkRow: React.FC<Bookmark> = ({
         animation: 'enter 300ms ease-out',
       }}>
       <LinkWithDescription title={Name} url={URL} description={Description} />
-      <div className='flex w-full h-4 mt-1'>
-        <div className='flex items-center'>
+      <div className='flex w-full h-4 mt-1 items-center'>
+        <div className='inline-flex items-center mr-2 pr-2 border-r-2 border-gray-600'>
           <svg
-            className='h-4 w-4 text-gray-400 mr-1'
+            className='w-4 align-middle text-gray-400 mr-1'
             xmlns='http://www.w3.org/2000/svg'
             fill='none'
             viewBox='0 0 24 24'
@@ -57,14 +63,23 @@ const BookmarkRow: React.FC<Bookmark> = ({
               d='M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z'
             />
           </svg>
-          <span className='text-sm text-gray-400'>
+          <span className='text-sm align-middle text-gray-500'>
             {relevantDate.format('DD MMM YYYY')}
           </span>
         </div>
-        {/* <div className='flex items-center'>
-          <BookmarkIcon className='h-4 w-4 text-gray-400 mr-1' type={Type} />
-          <span className='text-sm text-gray-400'>{'test'}</span>
-        </div> */}
+        <div className='inline-flex items-center'>
+          <BookmarkIcon
+            className='w-4 align-middle text-gray-400 mr-1'
+            type={type}
+          />
+          <span className='text-sm align-middle text-gray-500'>
+            {capitalize(
+              type === 'repository'
+                ? texts.bookmarks.type.repository
+                : texts.bookmarks.type.site
+            )}
+          </span>
+        </div>
       </div>
     </div>
   )

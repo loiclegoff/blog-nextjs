@@ -20,7 +20,11 @@ export const texts = {
       title: "Liens",
       description: "Ceux que j'ai retenus",
       showMore: "Voir plus",
-      showLess: "Voir moins"
+      showLess: "Voir moins",
+      type: {
+        repository: "source",
+        site: "site"
+      }
     },
     credits: {
       icons: {

@@ -1,5 +1,5 @@
 
-export type BookmarkType = "site" | "blog" | "repository";
+export type BookmarkType = "site" | "repository";
 
 
 export interface BookmarkData {
