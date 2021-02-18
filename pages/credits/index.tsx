@@ -11,10 +11,7 @@ import Blog from '../../assets/svgs/blog.svg'
 export default () => (
   <>
     <Nav />
-    <NextSeo
-      title={'Work ~ Timo Lins'}
-      description="A collection of some of my work I've made in the past. Including web apps, landing page designs and videos."
-    />
+    <NextSeo title={'Credits'} description='' />
     <Credits />
     <Footer />
   </>
