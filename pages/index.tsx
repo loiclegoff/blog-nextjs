@@ -1,4 +1,4 @@
-import { GetStaticProps } from 'next'
+import { GetServerSideProps } from 'next'
 import { NextSeo } from 'next-seo'
 import { Hero } from '../components/sections/hero'
 import { GitHubActivity } from '../components/sections/github-activity'
@@ -26,7 +26,7 @@ interface AppProps {
   }
 }
 
-export const getStaticProps: GetStaticProps<AppProps> = async () => {
+export const getServerSideProps: GetServerSideProps<AppProps> = async () => {
   const [
     bookmarksData,
     { contributedRepos, starredRepos },
@@ -46,7 +46,9 @@ export const getStaticProps: GetStaticProps<AppProps> = async () => {
 
       try {
         Description = await getDescriptionFromUrl(URL)
-      } catch (error) {}
+      } catch (error) {
+        console.error(error)
+      }
 
       return {
         ...a,
@@ -65,7 +67,6 @@ export const getStaticProps: GetStaticProps<AppProps> = async () => {
         contributedRepos,
       },
     },
-    revalidate: 10,
   }
 }
 
