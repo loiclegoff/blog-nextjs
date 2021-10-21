@@ -1,11 +1,14 @@
 import React, { useState } from 'react'
 import { texts } from '../../i18n'
-import { Bookmark, BookmarkType } from '../../types/bookmark'
+import { BookmarkData, BookmarkType } from '../../types/bookmark'
 
 import Git from '../../assets/svgs/git.svg'
 import Site from '../../assets/svgs/site.svg'
 import dayjs from 'dayjs'
 import { LinkWithDescription } from '../base/link-with-description'
+import { QueryClient, QueryClientProvider, useQuery } from 'react-query'
+import { getBookmarkDate, getBookmarkUrl, getPageBlocks } from '../../core/bookmarks'
+import { getDescriptionFromUrl } from '../../core/metadata'
 
 const BookmarkIcon: React.FC<{
   type: BookmarkType
@@ -31,23 +34,35 @@ const getTypeFromURL = (url: string) =>
     ? 'repository'
     : 'site'
 
-const BookmarkRow: React.FC<Bookmark> = ({
-  Name,
-  CreationTime,
-  // Tags,
-  URL,
-  // Type,
-  Description,
+const BookmarkRow: React.FC<{ id: string, Name: string, URL: string }> = ({
+  id,
+  Name
 }) => {
-  const relevantDate = dayjs(CreationTime).locale('fr')
-  const type = getTypeFromURL(URL)
+
+  const { data: pageData, isLoading: pageLoading } = useQuery(`getBookMark-${id}`, () => getPageBlocks(id))
+  const url = React.useMemo(() => {
+    return pageData && getBookmarkUrl(pageData, id)
+  }, [id, pageData])
+
+
+  const { data: descriptionData, isLoading: descriptionLoading } = useQuery(`getDescription-${url}`, () => url && getDescriptionFromUrl(url))
+
+  if (pageLoading || descriptionLoading) {
+    return <div className=" flex justify-center items-center">
+      <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-gray-900"></div>
+    </div>
+  }
+
+  const creationTime = pageData && getBookmarkDate(pageData, id)
+  const relevantDate = dayjs(creationTime).locale('fr')
+  const type = url && getTypeFromURL(url)
   return (
     <div
       className='flex flex-col items-center my-8 animate-enter'
       style={{
         animation: 'enter 300ms ease-out',
       }}>
-      <LinkWithDescription title={Name} url={URL} description={Description} />
+      {Name && url ? <LinkWithDescription title={Name} url={url} description={descriptionData} /> : null}
       <div className='flex w-full h-4 mt-1 items-center'>
         <div className='inline-flex items-center mr-2 pr-2 border-r-2 border-gray-600'>
           <svg
@@ -68,10 +83,10 @@ const BookmarkRow: React.FC<Bookmark> = ({
           </span>
         </div>
         <div className='inline-flex items-center'>
-          <BookmarkIcon
+          {type ? <BookmarkIcon
             className='w-4 align-middle text-gray-400 mr-1'
             type={type}
-          />
+          /> : null}
           <span className='text-sm align-middle text-gray-500'>
             {capitalize(
               type === 'repository'
@@ -85,35 +100,39 @@ const BookmarkRow: React.FC<Bookmark> = ({
   )
 }
 
-export const Bookmarks: React.FC<{ bookmarks: Bookmark[] }> = ({
-  bookmarks,
+
+export const Bookmarks: React.FC<{ bookmarksData: BookmarkData[] }> = ({
+  bookmarksData,
 }) => {
   const [showMore, setShowMore] = useState(false)
+  const queryClient = new QueryClient()
 
-  const bookmarksToShow = showMore ? bookmarks : bookmarks.slice(0, 5)
+  const bookmarksToShow = showMore ? bookmarksData : bookmarksData.slice(0, 5)
 
   return (
-    <div className='container my-16'>
-      <div className='m-auto max-w-3xl'>
-        <h1 className='text-4xl font-bold'>{texts.bookmarks.title}</h1>
-        <div className='text-2xl text-gray-600'>
-          {texts.bookmarks.description}
-        </div>
-        <div className='my-4'>
-          {bookmarksToShow.map((a, i) => (
-            <BookmarkRow key={i} {...a} />
-          ))}
-        </div>
-        <div className='flex justify-center'>
-          <button
-            className='px-2 py-1 text-gray-800 border border-gray-300 rounded shadow-xs'
-            onClick={() => setShowMore(!showMore)}>
-            {showMore
-              ? `${texts.bookmarks.showLess} ↑`
-              : `${texts.bookmarks.showMore} ↓`}
-          </button>
+    <QueryClientProvider client={queryClient}>
+      <div className='container my-16'>
+        <div className='m-auto max-w-3xl'>
+          <h1 className='text-4xl font-bold'>{texts.bookmarks.title}</h1>
+          <div className='text-2xl text-gray-600'>
+            {texts.bookmarks.description}
+          </div>
+          <div className='my-4'>
+            {bookmarksToShow.map((a, i) => (
+              <BookmarkRow key={i} id={a.id} Name={a.Name} URL={a.URL} />
+            ))}
+          </div>
+          <div className='flex justify-center'>
+            <button
+              className='px-2 py-1 text-gray-800 border border-gray-300 rounded shadow-xs'
+              onClick={() => setShowMore(!showMore)}>
+              {showMore
+                ? `${texts.bookmarks.showLess} ↑`
+                : `${texts.bookmarks.showMore} ↓`}
+            </button>
+          </div>
         </div>
       </div>
-    </div>
+    </QueryClientProvider>
   )
 }

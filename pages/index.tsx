@@ -8,18 +8,14 @@ import { getOpenGraphImage } from '../core/og-image'
 import { texts } from '../i18n'
 import { Footer } from '../components/sections/footer'
 import {
-  getBookmarkDate,
   getBookmarksTable,
-  getBookmarkUrl,
-  getPageBlocks,
 } from '../core/bookmarks'
-import { Bookmark, BookmarkData } from '../types/bookmark'
+import { BookmarkData } from '../types/bookmark'
 import React from 'react'
 import { Bookmarks } from '../components/sections/bookmarks'
-import { getDescriptionFromUrl } from '../core/metadata'
 
 interface AppProps {
-  bookmarks: Bookmark[]
+  bookmarksData: BookmarkData[]
   repos: {
     starredRepos: Repo[]
     contributedRepos: Repo[]
@@ -37,31 +33,10 @@ export const getServerSideProps: GetServerSideProps<AppProps> = async () => {
 
   // const { contributedRepos, starredRepos } = await fetchRepos(config.githubUsername, config.githubToken)
 
-  const bookmarks: Bookmark[] = await Promise.all(
-    bookmarksData.map(async (a) => {
-      const blockMap = await getPageBlocks(a.id)
-      const URL = getBookmarkUrl(blockMap, a.id)
-
-      let Description = ''
-
-      try {
-        Description = await getDescriptionFromUrl(URL)
-      } catch (error) {
-        console.error(error)
-      }
-
-      return {
-        ...a,
-        URL,
-        Description,
-        CreationTime: getBookmarkDate(blockMap, a.id),
-      }
-    })
-  )
 
   return {
     props: {
-      bookmarks,
+      bookmarksData,
       repos: {
         starredRepos,
         contributedRepos,
@@ -70,7 +45,8 @@ export const getServerSideProps: GetServerSideProps<AppProps> = async () => {
   }
 }
 
-export default function Home({ repos, bookmarks }: AppProps) {
+export default function Home({ repos, bookmarksData }: AppProps) {
+
   return (
     <>
       <NextSeo
@@ -86,7 +62,7 @@ export default function Home({ repos, bookmarks }: AppProps) {
         description={`${texts.hero.title} ${texts.hero.description}`}
       />
       <Hero />
-      <Bookmarks bookmarks={bookmarks} />
+      <Bookmarks bookmarksData={bookmarksData} />
       <GitHubActivity {...repos} />
       <Footer />
     </>
